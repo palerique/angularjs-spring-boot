@@ -1,27 +1,46 @@
 (function () {
 
-    var app = angular.module('meuTodo', []);
+    angular.module('meuTodo', [])
 
-    app.controller('TodoController', function ($scope) {
+        .controller('TodoController', function ($scope, $http) {
 
-        $scope.lista = [{ texto: 'Pagar contas', concluido: false }];
-
-        $scope.todo = { texto: '', concluido: false };
-
-        $scope.adicionar = function () {
-            $scope.lista.push($scope.todo);
-            $scope.todo = { texto: '', concluido: false };
-        };
-
-        $scope.apagar = function () {
-            var listaTmp = $scope.lista;
             $scope.lista = [];
-            angular.forEach(listaTmp, function (t) {
-                if (!t.concluido) {
-                    $scope.lista.push(t);
-                }
-            });
-        };
-    });
+
+            init();
+
+            function init() {
+                listar();
+                $scope.todo = {};
+            }
+
+            function listar() {
+                $http.get('/api/tarefas').then(function (response) {
+                    $scope.lista = response.data._embedded.tarefas;
+                });
+            }
+
+            $scope.adicionar = function () {
+                $http.post('/api/tarefas', $scope.todo).then(function () {
+                    init();
+                });
+            };
+
+            $scope.arquivar = function (tarefa) {
+                $http.put(tarefa._links.self.href, tarefa).then(function () {
+                    listar();
+                });
+            };
+
+            $scope.apagar = function () {
+                $scope.lista.forEach(function (t) {
+                    if (t.arquivada) {
+                        $http.delete(t._links.self.href).then(function () {
+                            listar();
+                        });
+                    }
+                })
+
+            };
+        });
 
 })();

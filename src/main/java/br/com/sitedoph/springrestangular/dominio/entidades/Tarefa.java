@@ -12,13 +12,7 @@ public class Tarefa {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String nome;
-
     private String descricao;
-
-    private String prioridade;
-
-    private String status;
 
     private boolean arquivada;
 
@@ -30,36 +24,12 @@ public class Tarefa {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getDescricao() {
         return descricao;
     }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getPrioridade() {
-        return prioridade;
-    }
-
-    public void setPrioridade(String prioridade) {
-        this.prioridade = prioridade;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public boolean isArquivada() {
@@ -74,10 +44,7 @@ public class Tarefa {
     public String toString() {
         return "Tarefa{" +
                 "id=" + id +
-                ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
-                ", prioridade='" + prioridade + '\'' +
-                ", status='" + status + '\'' +
                 ", arquivada=" + arquivada +
                 '}';
     }

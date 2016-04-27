@@ -12,6 +12,4 @@ public interface TarefaRepository extends PagingAndSortingRepository<Tarefa, Lon
 
     List<Tarefa> findByArquivada(@Param("arquivada") boolean arquivada);
 
-    List<Tarefa> findByStatus(@Param("status") String status);
-
 }
